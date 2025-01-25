@@ -1,32 +1,32 @@
+name: Pull Request Validation
+
 on:
   pull_request:
     branches:
       - develop
+
 jobs:
   linting-job:
+    name: Lint HTML and CSS Files
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
       - name: Install HTMLHint
-        run: npm install --save-dev htmlhint 
-      - name: Install Stylelint and Config
-        run: npm install --save-dev stylelint stylelint-config-standard
+        run: npm install --save-dev htmlhint
+      - name: Install Stylelint
+        run: npm install --save-dev stylelint
       - name: Lint HTML Files
         run: npx htmlhint "**/*.html"
       - name: Lint CSS Files
         run: npx stylelint "**/*.css"
       - name: Display Package.json Contents
         run: cat package.json
-        
 
   build-job:
-    name: Build Website
+    name: Build Static Website
+    needs: linting-job
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm install parcel
       - name: Build Website
-        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
+        run: parcel build "./src/index.html" --dist-dir "./dist"
