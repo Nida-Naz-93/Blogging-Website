@@ -1,10 +1,8 @@
 name: Pull Request Validation
-
 on:
   pull_request:
     branches:
       - develop
-
 jobs:
   linting-job:
     name: Lint HTML and CSS Files
@@ -28,5 +26,12 @@ jobs:
     needs: linting-job
     runs-on: ubuntu-latest
     steps:
+      - name: Lint HTML Files
+        run: npx htmlhint "**/*.html"
+      - name: Lint CSS Files
+        run: npx stylelint "**/*.css"
+      - name: Install Dependencies
+        run: |
+        npm install --save-dev htmlhint stylelint parcel-bundler
       - name: Build Website
         run: parcel build "./src/index.html" --dist-dir "./dist"
