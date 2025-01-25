@@ -18,6 +18,7 @@ jobs:
         run: npx stylelint "**/*.css"
       - name: Display Package.json Contents
         run: cat package.json
+        
 
   build-job:
     name: Build Website
