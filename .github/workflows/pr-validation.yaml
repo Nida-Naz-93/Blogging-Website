@@ -1,5 +1,8 @@
 name: liniting-wf
 on:
+  push:
+    branches:
+      - develop
   pull_request:
     branches:
       - develop
@@ -7,6 +10,8 @@ jobs:
   linting-job:
     runs-on: ubuntu-latest
     steps:
+      - name: checkout Repository
+        uses: actions/checkout@v4
       - name: Install HTMLHint
         run: npm install --save-dev htmlhint 
       - name: Install stylelint 
@@ -17,14 +22,3 @@ jobs:
         run: npx stylelint "**/*.css"
       - name: Display Package.json Contents
         run: cat package.json
-
-  build-job:
-    name: Build Website
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm install parcel
-      - name: Build Website
-        run: npx parcel build "./src/index.html" --dist-dir "./dist" --public-url "./"
