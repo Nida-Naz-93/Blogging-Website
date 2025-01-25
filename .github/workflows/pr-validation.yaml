@@ -31,7 +31,6 @@ jobs:
       - name: Lint CSS Files
         run: npx stylelint "**/*.css"
       - name: Install Dependencies
-        run: |
-        npm install --save-dev htmlhint stylelint parcel-bundler
+        run: npm install --save-dev htmlhint stylelint parcel-bundler
       - name: Build Website
         run: parcel build "./src/index.html" --dist-dir "./dist"
