@@ -1,21 +1,22 @@
-name: Pull Request Validation
+name: liniting-wf
 on:
   pull_request:
     branches:
       - develop
 jobs:
   linting-job:
-    name: Lint HTML and CSS
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm install --save-dev htmlhint stylelint
-      - name: Lint HTML Files
+      - name: Install HTMLHint
+        run: npm install --save-dev htmlhint 
+      - name: Install stylelint 
+        run: npm install --sase-dev stylelint 
+      - name: Lint Htnl Files
         run: npx htmlhint "**/*.html"
-      - name: Lint CSS Files
+      - name: Lint css Files
         run: npx stylelint "**/*.css"
+      - name: Display Package.json Contents
+        run: cat package.json
 
   build-job:
     name: Build Website
